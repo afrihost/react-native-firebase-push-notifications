@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		921BC0F623DB0BD8000FA892 /* RNFirebaseUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 921BC0F123DB0BD7000FA892 /* RNFirebaseUtil.m */; };
+		921BC0F723DB0BD8000FA892 /* RNFirebase.m in Sources */ = {isa = PBXBuildFile; fileRef = 921BC0F423DB0BD8000FA892 /* RNFirebase.m */; };
+		9241BB4A23DF064E00AE72EA /* RNFirebaseMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 9241BB4823DF064E00AE72EA /* RNFirebaseMessaging.m */; };
+		9241BB4D23DF076D00AE72EA /* RCTConvert+UIBackgroundFetchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 9241BB4B23DF076D00AE72EA /* RCTConvert+UIBackgroundFetchResult.m */; };
 		B3E7B58A1CC2AC0600A0062D /* FirebasePushNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* FirebasePushNotifications.m */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +28,15 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libFirebasePushNotifications.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFirebasePushNotifications.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		921BC0F123DB0BD7000FA892 /* RNFirebaseUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFirebaseUtil.m; sourceTree = "<group>"; };
+		921BC0F223DB0BD7000FA892 /* RNFirebaseUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFirebaseUtil.h; sourceTree = "<group>"; };
+		921BC0F323DB0BD8000FA892 /* RNFirebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFirebase.h; sourceTree = "<group>"; };
+		921BC0F423DB0BD8000FA892 /* RNFirebase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFirebase.m; sourceTree = "<group>"; };
+		921BC0F523DB0BD8000FA892 /* RNFirebaseEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFirebaseEvents.h; sourceTree = "<group>"; };
+		9241BB4823DF064E00AE72EA /* RNFirebaseMessaging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNFirebaseMessaging.m; sourceTree = "<group>"; };
+		9241BB4923DF064E00AE72EA /* RNFirebaseMessaging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNFirebaseMessaging.h; sourceTree = "<group>"; };
+		9241BB4B23DF076D00AE72EA /* RCTConvert+UIBackgroundFetchResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "RCTConvert+UIBackgroundFetchResult.m"; sourceTree = "<group>"; };
+		9241BB4C23DF076D00AE72EA /* RCTConvert+UIBackgroundFetchResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+UIBackgroundFetchResult.h"; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* FirebasePushNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebasePushNotifications.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* FirebasePushNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebasePushNotifications.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,7 +64,16 @@
 			isa = PBXGroup;
 			children = (
 				B3E7B5881CC2AC0600A0062D /* FirebasePushNotifications.h */,
+				9241BB4C23DF076D00AE72EA /* RCTConvert+UIBackgroundFetchResult.h */,
+				9241BB4B23DF076D00AE72EA /* RCTConvert+UIBackgroundFetchResult.m */,
 				B3E7B5891CC2AC0600A0062D /* FirebasePushNotifications.m */,
+				9241BB4923DF064E00AE72EA /* RNFirebaseMessaging.h */,
+				9241BB4823DF064E00AE72EA /* RNFirebaseMessaging.m */,
+				921BC0F323DB0BD8000FA892 /* RNFirebase.h */,
+				921BC0F423DB0BD8000FA892 /* RNFirebase.m */,
+				921BC0F523DB0BD8000FA892 /* RNFirebaseEvents.h */,
+				921BC0F223DB0BD7000FA892 /* RNFirebaseUtil.h */,
+				921BC0F123DB0BD7000FA892 /* RNFirebaseUtil.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,6 +117,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;
@@ -112,7 +135,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				921BC0F623DB0BD8000FA892 /* RNFirebaseUtil.m in Sources */,
+				9241BB4D23DF076D00AE72EA /* RCTConvert+UIBackgroundFetchResult.m in Sources */,
+				921BC0F723DB0BD8000FA892 /* RNFirebase.m in Sources */,
 				B3E7B58A1CC2AC0600A0062D /* FirebasePushNotifications.m in Sources */,
+				9241BB4A23DF064E00AE72EA /* RNFirebaseMessaging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +243,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-				"$(inherited)",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
