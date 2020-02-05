@@ -27,6 +27,7 @@ static FirebasePushNotifications *theFirebasePushNotifications = nil;
 static NSDictionary *initialNotification = nil;
 static bool jsReady = FALSE;
 static NSString *const DEFAULT_ACTION = @"com.apple.UNNotificationDefaultActionIdentifier";
+static NSString* initialToken = nil;
 
 + (nonnull instancetype)instance {
     return theFirebasePushNotifications;
@@ -73,6 +74,27 @@ RCT_EXPORT_MODULE(FirebaseNotifications);
         [pendingEvents removeAllObjects];
     }
 } */
+
+
+RCT_EXPORT_METHOD(getToken:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+  if (initialToken) {
+    resolve(initialToken);
+    initialToken = nil;
+  } else if ([[FIRMessaging messaging] FCMToken]) {
+    resolve([[FIRMessaging messaging] FCMToken]);
+  } else {
+    NSString * senderId = [[FIRApp defaultApp] options].GCMSenderID;
+    [[FIRMessaging messaging] retrieveFCMTokenForSenderID:senderId completion:^(NSString * _Nullable FCMToken, NSError * _Nullable error) {
+        if (error) {
+            reject(@"messaging/fcm-token-error", @"Failed to retrieve FCM token.", error);
+        } else if (FCMToken) {
+            resolve(FCMToken);
+        } else {
+            resolve([NSNull null]);
+        }
+    }];
+  }
+}
 
 // *******************************************************
 // ** Start AppDelegate methods
@@ -416,10 +438,16 @@ RCT_EXPORT_METHOD(jsInitialised:(RCTPromiseResolveBlock)resolve rejecter:(RCTPro
 // we create a temporary instance of FirebasePushNotifications.
 // With this temporary instance, we cache any events to be sent as soon as the bridge is set on the module
 - (void)sendJSEvent:(RCTEventEmitter *)emitter name:(NSString *)name body:(id)body {
+            DLog(@"yooooo hooooooo");
+            DLog(@"%@", name);
+                DLog(@"%@", body);
     if (emitter.bridge && jsReady) {
+                    DLog(@"yooooo ready");
         [RNFirebaseUtil sendJSEvent:emitter name:name body:body];
     } else {
+                    DLog(@"yooooo not ready");
         if ([name isEqualToString:NOTIFICATIONS_NOTIFICATION_OPENED] && !initialNotification) {
+                                DLog(@"yooooo not initial notifixation");
             initialNotification = body;
         } else if ([name isEqualToString:NOTIFICATIONS_NOTIFICATION_OPENED]) {
             DLog(@"Multiple notification open events received before the JS Notifications module has been initialised");

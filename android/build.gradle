@@ -87,6 +87,7 @@ repositories {
 
         // Official releases of React Native come with a prebuilt version of Android sources
         // in ./android, e.g. react-native/android/**/react-native-0.57.1.aar
+
         def androidPrebuiltBinaryDir = new File(
                 parentDir,
                 'node_modules/react-native/android'
@@ -123,7 +124,7 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
     // Add the Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
     implementation 'com.google.firebase:firebase-iid:20.0.2'
     implementation 'android.arch.work:work-runtime:1.0.1'

@@ -3,7 +3,7 @@
   "title": "React Native Firebase Push Notifications",
   "version": "1.0.0",
   "description": "TODO",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,11 +13,18 @@
     "baseUrl": "https://github.com/github_account/react-native-firebase-push-notifications"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "firebase",
+    "firebase-push-notifications",
+    "ios",
+    "android",
+    "fcm",
+    "gcm",
+    "google-cloud-messaging"
   ],
   "author": {
-    "name": "Your Name",
-    "email": "yourname@email.com"
+    "name": "Sacheen Dhanjie",
+    "email": "sacheen@afrihost.com"
   },
   "license": "MIT",
   "licenseFilename": "LICENSE",
@@ -25,6 +32,9 @@
   "peerDependencies": {
     "react": "^16.8.1",
     "react-native": ">=0.59.0-rc.0 <1.0.x"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "react": "^16.8.3",
