@@ -21,7 +21,7 @@ class Notifications extends NativeEventEmitter {
 
   constructor() {
     super(FirebaseNotifications)
-    
+
     this.localEventEmitter = new EventEmitter()
     this.removeOnNotificationOpened = this.addListener(
       "notifications_notification_opened",
@@ -49,11 +49,11 @@ class Notifications extends NativeEventEmitter {
   }
 
   get android(): AndroidNotifications {
-    return this._android;
+    return this._android
   }
 
   get ios(): IOSNotifications {
-    return this._ios;
+    return this._ios
   }
 
   onNotificationOpened = nextOrObserver => {
@@ -107,6 +107,14 @@ class Notifications extends NativeEventEmitter {
       }
     }
     return null
+  }
+
+  getBadge = () => {
+    return FirebaseNotifications.getBadge()
+  }
+
+  setBadge = async num => {
+    return await FirebaseNotifications.setBadge(num)
   }
 }
 
