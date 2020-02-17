@@ -1,26 +1,47 @@
+/**
+ * @flow
+ * Notification representation wrapper
+ */
 import { Platform } from "react-native"
 import AndroidNotification from "./AndroidNotification"
 import IOSNotification from "./IOSNotification"
+import _ from "lodash"
+
+import type { NativeNotification } from "./types"
+import type Notifications from "./"
+
+export type NotificationOpen = {|
+  action: string,
+  notification: Notification,
+  results?: { [string]: string }
+|}
 
 export default class Notification {
   // iOS 8/9 | 10+ | Android
   _android: AndroidNotification
 
-  _body: ""
+  _body: string
 
-  _data: {}
+  // alertBody | body | contentText
+  _data: { [string]: string }
 
+  // userInfo | userInfo | extras
   _ios: IOSNotification
 
-  _notificationId: ""
+  _notificationId: string
 
-  _sound: ""
+  _sound: string | void
 
-  _subtitle: ""
+  // soundName | sound | sound
+  _subtitle: string | void
 
-  _title: ""
+  // N/A | subtitle | subText
+  _title: string // alertTitle | title | contentTitle
 
-  constructor(nativeNotification, notifications) {
+  constructor(
+    nativeNotification?: NativeNotification,
+    notifications?: Notifications
+  ) {
     if (nativeNotification) {
       this._body = nativeNotification.body
       this._data = nativeNotification.data
@@ -47,44 +68,54 @@ export default class Notification {
     this._notificationId = this._notificationId || _.uniqueId()
   }
 
-  get android() {
+  get android(): AndroidNotification {
     return this._android
   }
 
-  get body() {
+  get body(): string {
     return this._body
   }
 
-  get data() {
+  get data(): { [string]: string } {
     return this._data
   }
 
-  get ios() {
+  get ios(): IOSNotification {
     return this._ios
   }
 
-  get notificationId() {
+  get notificationId(): string {
     return this._notificationId
   }
 
-  get sound() {
+  get sound(): ?string {
     return this._sound
   }
 
-  get subtitle() {
+  get subtitle(): ?string {
     return this._subtitle
   }
 
-  get title() {
+  get title(): string {
     return this._title
   }
 
-  setBody(body) {
+  /**
+   *
+   * @param body
+   * @returns {Notification}
+   */
+  setBody(body: string): Notification {
     this._body = body
     return this
   }
 
-  setData(data) {
+  /**
+   *
+   * @param data
+   * @returns {Notification}
+   */
+  setData(data: Object = {}): Notification {
     if (!_.isObject(data)) {
       throw new Error(
         `Notification:withData expects an object but got type '${typeof data}'.`
@@ -94,27 +125,47 @@ export default class Notification {
     return this
   }
 
-  setNotificationId(notificationId) {
+  /**
+   *
+   * @param notificationId
+   * @returns {Notification}
+   */
+  setNotificationId(notificationId: string): Notification {
     this._notificationId = notificationId
     return this
   }
 
-  setSound(sound) {
+  /**
+   *
+   * @param sound
+   * @returns {Notification}
+   */
+  setSound(sound: string): Notification {
     this._sound = sound
     return this
   }
 
-  setSubtitle(subtitle) {
+  /**
+   *
+   * @param subtitle
+   * @returns {Notification}
+   */
+  setSubtitle(subtitle: string): Notification {
     this._subtitle = subtitle
     return this
   }
 
-  setTitle(title) {
+  /**
+   *
+   * @param title
+   * @returns {Notification}
+   */
+  setTitle(title: string): Notification {
     this._title = title
     return this
   }
 
-  build() {
+  build(): NativeNotification {
     if (!this._notificationId) {
       throw new Error(
         "Notification: Missing required `notificationId` property"

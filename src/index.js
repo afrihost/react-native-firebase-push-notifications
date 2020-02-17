@@ -2,10 +2,11 @@ import { NativeModules, Platform, NativeEventEmitter } from "react-native"
 import Notification from "./notifications/Notification"
 import AndroidNotifications from "./notifications/AndroidNotifications"
 import IOSNotifications from "./notifications/IOSNotifications"
-
+import EventEmitter from "react-native/Libraries/vendor/emitter/EventEmitter"
 import _ from "lodash"
 
 const { FirebaseNotifications } = NativeModules
+const { RNFirebaseMessaging } = NativeModules
 
 const NATIVE_EVENTS = [
   "notifications_notification_displayed",
@@ -20,21 +21,25 @@ class Notifications extends NativeEventEmitter {
 
   constructor() {
     super(FirebaseNotifications)
-    const eventEmitter = new NativeEventEmitter(FirebaseNotifications)
-    removeOnNotificationOpened = eventEmitter.addListener(
+    
+    this.localEventEmitter = new EventEmitter()
+    this.removeOnNotificationOpened = this.addListener(
       "notifications_notification_opened",
       event => {
-        this.emit(
+        this.localEventEmitter.emit(
           "onNotificationOpened",
           new Notification(event.notification, this)
         )
       }
     )
 
-    removeOnNotificationReceived = eventEmitter.addListener(
+    removeOnNotificationReceived = this.addListener(
       "notifications_notification_received",
       event => {
-        this.emit("onNotification", new Notification(event, this))
+        this.localEventEmitter.emit(
+          "onNotification",
+          new Notification(event, this)
+        )
       }
     )
 
@@ -43,25 +48,30 @@ class Notifications extends NativeEventEmitter {
     }
   }
 
+  get android(): AndroidNotifications {
+    return this._android;
+  }
+
+  get ios(): IOSNotifications {
+    return this._ios;
+  }
+
   onNotificationOpened = nextOrObserver => {
-    console.log("onNotificationOpened")
     let listener
     if (_.isFunction(nextOrObserver)) {
-      console.log("nextOrObserver", nextOrObserver)
       listener = nextOrObserver
     } else if (isObject(nextOrObserver) && _.isFunction(nextOrObserver.next)) {
       listener = nextOrObserver.next
-      console.log("listener = nextOrObserver.next", nextOrObserver)
     } else {
       throw new Error(
         "Notifications.onNotificationOpened failed: First argument must be a function or observer object with a `next` function."
       )
     }
 
-    this.addListener("onNotificationOpened", listener)
+    this.localEventEmitter.addListener("onNotificationOpened", listener)
 
     return () => {
-      this.removeListener("onNotificationOpened", listener)
+      this.localEventEmitter.removeListener("onNotificationOpened", listener)
     }
   }
 
@@ -76,10 +86,10 @@ class Notifications extends NativeEventEmitter {
         "Notifications.onNotification failed: First argument must be a function or observer object with a `next` function."
       )
     }
-    this.addListener("onNotification", listener)
+    this.localEventEmitter.addListener("onNotification", listener)
 
     return () => {
-      this.removeListener("onNotification", listener)
+      this.localEventEmitter.removeListener("onNotification", listener)
     }
   }
 
@@ -87,23 +97,57 @@ class Notifications extends NativeEventEmitter {
     return FirebaseNotifications.getToken()
   }
 
-  getInitialNotification = () => {
-    return FirebaseNotifications.getInitialNotification().then(
-      notificationOpen => {
-        if (notificationOpen) {
-          return {
-            action: notificationOpen.action,
-            notification: new Notification(notificationOpen.notification, this),
-            results: notificationOpen.results
-          }
-        }
-        return null
+  getInitialNotification = async () => {
+    const initialNotification = await FirebaseNotifications.getInitialNotification()
+    if (_.has(initialNotification, "notification")) {
+      return {
+        action: initialNotification.action,
+        notification: new Notification(initialNotification.notification, this),
+        results: initialNotification.results
+      }
+    }
+    return null
+  }
+}
+
+class Messaging extends NativeEventEmitter {
+  constructor() {
+    super(RNFirebaseMessaging)
+    this.localEventEmitter = new EventEmitter()
+
+    removeMessageTokenRefreshed = this.addListener(
+      "messaging_token_refreshed",
+      event => {
+        this.localEventEmitter.emit("onTokenRefresh", event)
       }
     )
+  }
+
+  onTokenRefresh = nextOrObserver => {
+    let listener
+    if (_.isFunction(nextOrObserver)) {
+      listener = nextOrObserver
+    } else if (isObject(nextOrObserver) && _.isFunction(nextOrObserver.next)) {
+      listener = nextOrObserver.next
+    } else {
+      throw new Error(
+        "Notifications.onTokenRefresh failed: First argument must be a function or observer object with a `next` function."
+      )
+    }
+    this.localEventEmitter.addListener("onTokenRefresh", listener)
+
+    return () => {
+      this.localEventEmitter.removeListener("onTokenRefresh", listener)
+    }
+  }
+
+  getToken = () => {
+    return RNFirebaseMessaging.getToken()
   }
 }
 
 export const notifications = new Notifications()
+export const messages = new Messaging()
 export const NotificationMessage = Notification
 
 //export default FirebaseNotifications

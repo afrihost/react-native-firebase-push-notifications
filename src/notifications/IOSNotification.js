@@ -53,7 +53,7 @@ export default class IOSNotification {
       this._attachments = []
     }
 
-    if (!Platform === "ios" || !notifications || !notifications.ios) {
+    if (!(Platform.OS === "ios") || !notifications || !notifications.ios) {
       return this
     }
 
