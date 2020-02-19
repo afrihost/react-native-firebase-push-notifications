@@ -1,7 +1,7 @@
 {
   "name": "react-native-firebase-push-notifications",
   "title": "React Native Firebase Push Notifications",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A React native firebase push notification implementation for Android and iOS",
   "main": "./src/index.js",
   "scripts": {
@@ -22,7 +22,12 @@
     "gcm",
     "google-cloud-messaging"
   ],
-  "author": "Sacheen Dhanjie",
+  "author": {
+    "name": "Sacheen Dhanjie",
+    "email": "open-source@afrihost.com",
+    "username": "open-source@afrihost.com"
+  },
+
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "peerDependencies": {
@@ -41,3 +46,4 @@
   },
   "homepage": "https://github.com/afrihost/react-native-firebase-push-notifications#readme"
 }
+
