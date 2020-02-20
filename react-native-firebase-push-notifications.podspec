@@ -20,8 +20,8 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency "React"
-  s.dependency "Firebase/Core"
-  s.dependency "Firebase/Messaging"
+  s.dependency "Firebase/Core", '~> 6.13.0'
+  s.dependency "Firebase/Messaging", '~> 6.13.0'
   # ...
   # s.dependency "..."
 end
