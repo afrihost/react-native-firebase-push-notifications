@@ -438,16 +438,10 @@ RCT_EXPORT_METHOD(jsInitialised:(RCTPromiseResolveBlock)resolve rejecter:(RCTPro
 // we create a temporary instance of FirebasePushNotifications.
 // With this temporary instance, we cache any events to be sent as soon as the bridge is set on the module
 - (void)sendJSEvent:(RCTEventEmitter *)emitter name:(NSString *)name body:(id)body {
-            DLog(@"yooooo hooooooo");
-            DLog(@"%@", name);
-                DLog(@"%@", body);
     if (emitter.bridge && jsReady) {
-                    DLog(@"yooooo ready");
         [RNFirebaseUtil sendJSEvent:emitter name:name body:body];
     } else {
-                    DLog(@"yooooo not ready");
-        if ([name isEqualToString:NOTIFICATIONS_NOTIFICATION_OPENED] && !initialNotification) {
-                                DLog(@"yooooo not initial notifixation");
+        if ([name isEqualToString:NOTIFICATIONS_NOTIFICATION_OPENED] && !initialNotification) {            
             initialNotification = body;
         } else if ([name isEqualToString:NOTIFICATIONS_NOTIFICATION_OPENED]) {
             DLog(@"Multiple notification open events received before the JS Notifications module has been initialised");
