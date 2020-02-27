@@ -169,7 +169,7 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
 
 4.  run `$ npx react-native run-ios` to confirm the app communicates with firebase (You may need to uninstall and reinstall your app.)
 5.
-6.  https://firebase.google.com/docs/cloud-messaging/ios/certs
+6.  Follow the cert instructions here: <https://firebase.google.com/docs/cloud-messaging/ios/certs>
     1. Go to the firebase console
     2. select the iOS app (settings)
     3. click cloud messaging
@@ -292,3 +292,5 @@ import { notifications } from "react-native-firebase-push-notifications"
   }
 
 ```
+
+Check out the sample app <https://github.com/afrihost/firebasePushTest>
