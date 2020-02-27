@@ -122,6 +122,21 @@ class Notifications extends NativeEventEmitter {
     }
     return null
   }
+
+  requestPermission = async () => {
+    if (Platform.OS === "ios") {
+      return await RNFirebaseMessaging.requestPermission()
+    }
+    return null
+  }
+
+  hasPermission = async () => {
+    if (Platform.OS === "ios") {
+      return await RNFirebaseMessaging.hasPermission()
+    }
+
+    return null
+  }
 }
 
 class Messaging extends NativeEventEmitter {
@@ -157,6 +172,14 @@ class Messaging extends NativeEventEmitter {
 
   getToken = () => {
     return RNFirebaseMessaging.getToken()
+  }
+
+  requestPermission = async () => {
+    return await RNFirebaseMessaging.requestPermission()
+  }
+
+  hasPermission = async () => {
+    return await RNFirebaseMessaging.hasPermission()
   }
 }
 
