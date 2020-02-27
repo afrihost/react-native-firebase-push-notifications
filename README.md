@@ -179,7 +179,7 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
     2. Background modes > Remote notifications
 8.  Add the following code to `AppDelegate.m`
 
-    1. To received the notifications
+    1. To recieve the notifications
 
     ```
     - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
