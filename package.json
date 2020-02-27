@@ -1,7 +1,7 @@
 {
   "name": "react-native-firebase-push-notifications",
   "title": "React Native Firebase Push Notifications",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A React native firebase push notification implementation for Android and iOS",
   "main": "./src/index.js",
   "scripts": {
