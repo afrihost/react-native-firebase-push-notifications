@@ -149,8 +149,8 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
     1. Fill in the required information
     2. Download the `GoogleService-Info.plist` then, Move the GoogleService-Info.plist file that you just downloaded into the root of your Xcode project and add it to all targets.
     3. Add the firebase SDK if you are **not** using PODS.
-3.  add the following in AppDelegate code
-
+3.  add the following in AppDelegate
+    ```
     #import "AppDelegate.h"
     ....
     #import "Firebase.h" <--- Add this
@@ -166,7 +166,7 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
             ..........
             return YES;
             }
-
+    ```
 4.  run `$ npx react-native run-ios` to confirm the app communicates with firebase (You may need to uninstall and reinstall your app.)
 5.
 6.  Follow the cert instructions here: <https://firebase.google.com/docs/cloud-messaging/ios/certs>
