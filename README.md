@@ -167,7 +167,46 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
             return YES;
             }
 
-4.  Finally, run `$ npx react-native run-ios` to confirm the app communicates with firebase (You may need to uninstall and reinstall your app.)
+4.  run `$ npx react-native run-ios` to confirm the app communicates with firebase (You may need to uninstall and reinstall your app.)
+5.
+6.  https://firebase.google.com/docs/cloud-messaging/ios/certs
+    1. Go to the firebase console
+    2. select the iOS app (settings)
+    3. click cloud messaging
+    4. Upload the Authentication Key and fill in the detatils
+7.  In Xcode, enable the following capabilities:
+    1. Push Notifications
+    2. Background modes > Remote notifications
+8.  Add the following code to `AppDelegate.m`
+
+    1. To received the notifications
+
+    ```
+    - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    [[FirebasePushNotifications instance] didReceiveLocalNotification:notification];
+    }
+    ```
+
+    2. optional for remote notifications
+
+    ```
+    #import "RNFirebaseMessaging.h"
+    .....
+    .....
+    - (void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo
+                                                        fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler{
+    [[FirebasePushNotifications instance] didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+    }
+
+    - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+
+    [[RNFirebaseMessaging instance] didRegisterUserNotificationSettings:notificationSettings];
+    }
+    ```
+
+***NB!!!! Notifications will only come through on a real physical device - this is a limitation set by Apple.***
+
+***NB!!!! You can only recieve the messages / notifications on iOS if you have permission - ensure you request and have the permission first.***
 
 ## Usage
 
@@ -202,6 +241,7 @@ import { notifications } from "react-native-firebase-push-notifications"
     //remember to remove the listener on un mount
     //this gets triggered when the application is in the forground/runnning
     //for android make sure you manifest is setup - else this wont work
+    //Android will not have any info set on the notification properties (title, subtitle, etc..), but _data will still contain information
     this.removeOnNotification = notifications.onNotification(notification => {
       //do something with the notification
       console.log("onNotification", notification)
@@ -223,6 +263,18 @@ import { notifications } from "react-native-firebase-push-notifications"
   getBadge = async () => {
     //only works on iOS for now
     return await notifications.getBadge()
+  }
+
+  hasPermission = async () => {
+    //only works on iOS
+    return await notifications.hasPermission()
+    //or     return await messages.hasPermission()
+  }
+
+  requestPermission = async () => {
+    //only works on iOS
+    return await notifications.requestPermission()
+    //or     return await messages.requestPermission()
   }
 
     componentWillUnmount() {
