@@ -88,7 +88,7 @@ The Firebase console provides a `google-services.json` file containing a set of 
        <uses-permission android:name="android.permission.VIBRATE" />
    ```
 
-   2. Setup lauunch mode
+   2. Setup launch mode
 
    ```
    <activity
