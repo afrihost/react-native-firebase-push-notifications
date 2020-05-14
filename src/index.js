@@ -33,7 +33,7 @@ class Notifications extends NativeEventEmitter {
       }
     )
 
-    removeOnNotificationReceived = this.addListener(
+    this.removeOnNotificationReceived = this.addListener(
       "notifications_notification_received",
       event => {
         this.localEventEmitter.emit(
