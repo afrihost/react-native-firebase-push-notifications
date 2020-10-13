@@ -150,6 +150,7 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
     2. Download the `GoogleService-Info.plist` then, Move the GoogleService-Info.plist file that you just downloaded into the root of your Xcode project and add it to all targets.
     3. Add the firebase SDK if you are **not** using PODS.
 3.  add the following in AppDelegate
+
     ```
     #import "AppDelegate.h"
     ....
@@ -167,6 +168,7 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
             return YES;
             }
     ```
+
 4.  run `$ npx react-native run-ios` to confirm the app communicates with firebase (You may need to uninstall and reinstall your app.)
 5.
 6.  Follow the cert instructions here: <https://firebase.google.com/docs/cloud-messaging/ios/certs>
@@ -204,9 +206,9 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
     }
     ```
 
-***NB!!!! Notifications will only come through on a real physical device - this is a limitation set by Apple.***
+**_NB!!!! Notifications will only come through on a real physical device - this is a limitation set by Apple._**
 
-***NB!!!! You can only recieve the messages / notifications on iOS if you have permission - ensure you request and have the permission first.***
+**_NB!!!! You can only recieve the messages / notifications on iOS if you have permission - ensure you request and have the permission first._**
 
 ## Usage
 
@@ -276,6 +278,30 @@ import { notifications } from "react-native-firebase-push-notifications"
     return await notifications.requestPermission()
     //or     return await messages.requestPermission()
   }
+
+localNotification = async () => {
+  //required for Android
+  const channel = new Android.Channel(
+    "test-channel",
+    "Test Channel",
+    Android.Importance.Max
+  ).setDescription("My apps test channel")
+
+  // for android create the channel
+  notifications.android().createChannel(channel)
+  await notifications.displayNotification(
+    new NotificationMessage()
+      .setNotificationId("notification-id")
+      .setTitle("Notification title")
+      .setBody("Notification body")
+      .setData({
+        key1: "key1",
+        key2: "key2",
+      })
+      .android.setChannelId("test-channel") //required for android
+  )
+}
+
 
     componentWillUnmount() {
     //remove the listener on unmount
