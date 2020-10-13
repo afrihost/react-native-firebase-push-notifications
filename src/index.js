@@ -4,6 +4,20 @@ import AndroidNotifications from "./notifications/AndroidNotifications"
 import IOSNotifications from "./notifications/IOSNotifications"
 import EventEmitter from "react-native/Libraries/vendor/emitter/EventEmitter"
 import _ from "lodash"
+import AndroidAction from "./notifications/AndroidAction"
+import AndroidChannel from "./notifications/AndroidChannel"
+import AndroidChannelGroup from "./notifications/AndroidChannelGroup"
+import AndroidRemoteInput from "./notifications/AndroidRemoteInput"
+import {
+  BadgeIconType,
+  Category,
+  Defaults,
+  GroupAlert,
+  Importance,
+  Priority,
+  SemanticAction,
+  Visibility,
+} from "./notifications/types"
 
 const { FirebaseNotifications } = NativeModules
 const { RNFirebaseMessaging } = NativeModules
@@ -11,21 +25,17 @@ const { RNFirebaseMessaging } = NativeModules
 const NATIVE_EVENTS = [
   "notifications_notification_displayed",
   "notifications_notification_opened",
-  "notifications_notification_received"
+  "notifications_notification_received",
 ]
 
 class Notifications extends NativeEventEmitter {
-  _android: AndroidNotifications
-
-  _ios: IOSNotifications
-
   constructor() {
     super(FirebaseNotifications)
 
     this.localEventEmitter = new EventEmitter()
     this.removeOnNotificationOpened = this.addListener(
       "notifications_notification_opened",
-      event => {
+      (event) => {
         this.localEventEmitter.emit(
           "onNotificationOpened",
           new Notification(event.notification, this)
@@ -35,7 +45,7 @@ class Notifications extends NativeEventEmitter {
 
     this.removeOnNotificationReceived = this.addListener(
       "notifications_notification_received",
-      event => {
+      (event) => {
         this.localEventEmitter.emit(
           "onNotification",
           new Notification(event, this)
@@ -48,15 +58,19 @@ class Notifications extends NativeEventEmitter {
     }
   }
 
-  get android(): AndroidNotifications {
-    return this._android
+  android() {
+    return new AndroidNotifications()
   }
 
-  get ios(): IOSNotifications {
-    return this._ios
+  ios() {
+    return new IOSNotifications()
   }
 
-  onNotificationOpened = nextOrObserver => {
+  displayNotification = async (notification) => {
+    return await FirebaseNotifications.displayNotification(notification.build())
+  }
+
+  onNotificationOpened = (nextOrObserver) => {
     let listener
     if (_.isFunction(nextOrObserver)) {
       listener = nextOrObserver
@@ -75,7 +89,7 @@ class Notifications extends NativeEventEmitter {
     }
   }
 
-  onNotification = nextOrObserver => {
+  onNotification = (nextOrObserver) => {
     let listener
     if (_.isFunction(nextOrObserver)) {
       listener = nextOrObserver
@@ -103,7 +117,7 @@ class Notifications extends NativeEventEmitter {
       return {
         action: initialNotification.action,
         notification: new Notification(initialNotification.notification, this),
-        results: initialNotification.results
+        results: initialNotification.results,
       }
     }
     return null
@@ -116,7 +130,7 @@ class Notifications extends NativeEventEmitter {
     return null
   }
 
-  setBadge = async num => {
+  setBadge = async (num) => {
     if (Platform.OS === "ios") {
       return await FirebaseNotifications.setBadge(num)
     }
@@ -146,13 +160,13 @@ class Messaging extends NativeEventEmitter {
 
     removeMessageTokenRefreshed = this.addListener(
       "messaging_token_refreshed",
-      event => {
+      (event) => {
         this.localEventEmitter.emit("onTokenRefresh", event)
       }
     )
   }
 
-  onTokenRefresh = nextOrObserver => {
+  onTokenRefresh = (nextOrObserver) => {
     let listener
     if (_.isFunction(nextOrObserver)) {
       listener = nextOrObserver
@@ -186,5 +200,18 @@ class Messaging extends NativeEventEmitter {
 export const notifications = new Notifications()
 export const messages = new Messaging()
 export const NotificationMessage = Notification
-
+export const Android = {
+  Action: AndroidAction,
+  BadgeIconType: BadgeIconType,
+  Category: Category,
+  Channel: AndroidChannel,
+  ChannelGroup: AndroidChannelGroup,
+  Defaults: Defaults,
+  GroupAlert: GroupAlert,
+  Importance: Importance,
+  Priority: Priority,
+  RemoteInput: AndroidRemoteInput,
+  SemanticAction: SemanticAction,
+  Visibility: Visibility,
+}
 //export default FirebaseNotifications
