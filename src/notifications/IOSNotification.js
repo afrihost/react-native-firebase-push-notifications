@@ -9,11 +9,11 @@ import { type BackgroundFetchResultValue } from "./IOSNotifications"
 import type {
   IOSAttachment,
   IOSAttachmentOptions,
-  NativeIOSNotification
+  NativeIOSNotification,
 } from "./types"
 const { FirebaseNotifications } = NativeModules
 
-type CompletionHandler = BackgroundFetchResultValue => void
+type CompletionHandler = (BackgroundFetchResultValue) => void
 
 export default class IOSNotification {
   _alertAction: string | void
@@ -120,7 +120,7 @@ export default class IOSNotification {
     this._attachments.push({
       identifier,
       options,
-      url
+      url,
     })
     return this._notification
   }
@@ -195,7 +195,7 @@ export default class IOSNotification {
       category: this._category,
       hasAction: this._hasAction,
       launchImage: this._launchImage,
-      threadIdentifier: this._threadIdentifier
+      threadIdentifier: this._threadIdentifier,
     }
   }
 }
