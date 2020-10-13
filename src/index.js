@@ -31,7 +31,8 @@ const NATIVE_EVENTS = [
 class Notifications extends NativeEventEmitter {
   constructor() {
     super(FirebaseNotifications)
-
+    this.AndroidNotifications = new AndroidNotifications()
+    this.IOSNotifications = new IOSNotifications()
     this.localEventEmitter = new EventEmitter()
     this.removeOnNotificationOpened = this.addListener(
       "notifications_notification_opened",
@@ -59,11 +60,11 @@ class Notifications extends NativeEventEmitter {
   }
 
   android() {
-    return new AndroidNotifications()
+    return this.AndroidNotifications
   }
 
   ios() {
-    return new IOSNotifications()
+    return this.IOSNotifications
   }
 
   displayNotification = async (notification) => {
