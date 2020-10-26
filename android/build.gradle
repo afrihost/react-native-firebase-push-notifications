@@ -59,6 +59,7 @@ android {
 repositories {
     // ref: https://www.baeldung.com/maven-local-repository
     mavenLocal()
+    mavenCentral()
     maven {
         // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
         url "$rootDir/../node_modules/react-native/android"
@@ -128,6 +129,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
     implementation 'com.google.firebase:firebase-iid:20.0.2'
     implementation 'android.arch.work:work-runtime:1.0.1'
+    implementation "me.leolin:ShortcutBadger:1.1.22@aar"
     // Add the SDKs for any other Firebase products you want to use in your app
     // For example, to use Firebase Authentication and Cloud Firestore
 //    implementation 'com.google.firebase:firebase-auth:19.2.0'
@@ -135,7 +137,7 @@ dependencies {
 
     // Getting a "Could not find" error? Make sure that you've added
     // Google's Maven repository to your root-level build.gradle file
-    compileOnly 'me.leolin:ShortcutBadger:1.1.22@aar'
+    //compileOnly 'me.leolin:ShortcutBadger:1.1.22@aar'
 }
 
 def configureReactNativePom(def pom) {

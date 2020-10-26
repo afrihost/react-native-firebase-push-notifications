@@ -258,12 +258,12 @@ import { notifications } from "react-native-firebase-push-notifications"
     })
   }
   setBadge = async number => {
-    //only works on iOS for now
+    //only works on iOS and some Android Devices
     return await notifications.setBadge(number)
   }
 
   getBadge = async () => {
-    //only works on iOS for now
+    //only works on iOS and some Android Devices
     return await notifications.getBadge()
   }
 
