@@ -129,7 +129,6 @@ class Notifications extends NativeEventEmitter {
   }
 
   setBadge = async (num) => {
-    console.log(FirebaseNotifications)
     return await FirebaseNotifications.setBadge(num)
   }
 
