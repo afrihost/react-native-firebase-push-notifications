@@ -2,11 +2,11 @@
 
 This project is allows you to recieve remote push notifications for iOS and Android. There is support for local notifications and messaging channel's which will be updated periodically.
 
-NB!!! This is a work in progress, the remote notifications work and has been done as priority, the rest will follow periodically.
+❗ This is a work in progress, the remote notifications work and has been done as priority, the rest will follow periodically.
 
 To get started follow the instructions below:
 
-## Getting started
+## 🚧 Getting started
 
 `$ npm install react-native-firebase-push-notifications --save`
 
@@ -24,7 +24,7 @@ Do this if you are not on react-native 0.59 or less, there will not be much supp
 
 `$ react-native link react-native-firebase-push-notifications`
 
-## Android Setup
+## 🔧 Android Setup
 
 ### Add firebase credentials
 
@@ -33,52 +33,49 @@ The Firebase console provides a `google-services.json` file containing a set of 
 ### Setup Credentials
 
 1. Select your firebase android project
-2. select the android icon that will open the configuration section
+2. Select the android icon that will open the configuration section
    1. Fill in the required information
-   2. Dpwnload the `google=services.json` file. Then Switch to the Project view in Android Studio to see your project root directory. Move the google-services.json file that you just downloaded into your Android app module root directory. eg. `/yourAppsName/android/app`
+   2. Dpwnload the `google-services.json` file. Then Switch to the Project view in Android Studio to see your project root directory. Move the google-services.json file that you just downloaded into your Android app module root directory. eg. `/yourAppsName/android/app`
 3. Add the google-services plugin inside `yourAppsName/android`
-
-   1. ```javascript buildscript {
-      repositories {
-          // Check that you have the following line (if not, add it):
-          google()  // Google's Maven repository
-      }
-      dependencies {
-          ...
-          // Add this line
-          classpath 'com.google.gms:google-services:4.3.3'
-      }
-      }
-
-      allprojects {
+4. (Miss it if already have firebase) 
+```javascript buildscript {
+  repositories {
+      // Check that you have the following line (if not, add it):
+      google()  // Google's Maven repository
+  }
+  dependencies {
       ...
-      repositories {
-          // Check that you have the following line (if not, add it):
-          google()  // Google's Maven repository
-          ...
+      // Add this line
+      classpath 'com.google.gms:google-services:4.3.3'
+    }
+  allprojects {
+    ...
+    repositories {
+        // Check that you have the following line (if not, add it):
+        google()  // Google's Maven repository
+        ...
       }
-      }
-      ```
+  }
+  ```
 
-   2. App-level build.gradle (<project>/<app-module>/build.gradle):
+5. (Miss it if already have firebase) 
+App-level build.gradle (<project>/<app-module>/build.gradle):
 
-   ````javascript
-       apply plugin: 'com.android.application'
-       // Add this line
-       apply plugin: 'com.google.gms.google-services'
+```javascript
+    apply plugin: 'com.android.application'
+    // Add this line
+    apply plugin: 'com.google.gms.google-services'
 
-       dependencies {
-       // add the Firebase SDK for Google Analytics
-       implementation 'com.google.firebase:firebase-analytics:17.2.2'
-       // add SDKs for any other desired Firebase products
-       // https://firebase.google.com/docs/android/setup#available-libraries
-       }```
-   3. Finally, press 'Sync now' in the bar that appears in the IDE
-   ````
+    dependencies {
+    // add the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    // add SDKs for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
+    }
+```
 
-4. run `$ npx react-native run-android` to test if everything is working
-5. update the Android Manifest
-
+6. Finally, press 'Sync now' in the bar that appears in the IDE
+7. Update the Android Manifest
    1. add the permissions
 
    ```
@@ -98,6 +95,7 @@ The Firebase console provides a `google-services.json` file containing a set of 
    ```
 
    3. icon & color (optional) <https://github.com/firebase/quickstart-android/tree/master/messaging#custom-default-icon>
+   If conflicts with existed firebase package, remove this lines, because they already exists.
 
    ```
    <application ...>
@@ -111,6 +109,7 @@ The Firebase console provides a `google-services.json` file containing a set of 
    ```
 
    4. Notification channels (Optional) - Work in progress
+   If conflicts with existed firebase package, remove this lines, because they already exists.
 
    ```
    <application ...>
@@ -135,8 +134,9 @@ The Firebase console provides a `google-services.json` file containing a set of 
    </receiver>
    </application>
    ```
+8. Run `$ npx react-native run-android` to test if everything is working
 
-## iOS Setup
+## 🔧 iOS Setup
 
 ### Add firebase credentials
 
@@ -145,16 +145,17 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
 ### Setup Credentials
 
 1.  Select your firebase iOS project
-2.  select the iOS icon that will open the configuration section
+2.  Select the iOS icon that will open the configuration section
     1. Fill in the required information
     2. Download the `GoogleService-Info.plist` then, Move the GoogleService-Info.plist file that you just downloaded into the root of your Xcode project and add it to all targets.
     3. Add the firebase SDK if you are **not** using PODS.
-3.  add the following in AppDelegate
+3.  Add the following in AppDelegate
 
     ```
     #import "AppDelegate.h"
     ....
     #import "Firebase.h" <--- Add this
+    #import "RNFirebaseMessaging.h" <--- Add this
     #import "FirebasePushNotifications.h" <--- Add this
 
             @implementation AppDelegate
@@ -168,18 +169,15 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
             return YES;
             }
     ```
-
-4.  run `$ npx react-native run-ios` to confirm the app communicates with firebase (You may need to uninstall and reinstall your app.)
-5.
-6.  Follow the cert instructions here: <https://firebase.google.com/docs/cloud-messaging/ios/certs>
+4.  Follow the cert instructions here: <https://firebase.google.com/docs/cloud-messaging/ios/certs>
     1. Go to the firebase console
     2. select the iOS app (settings)
     3. click cloud messaging
     4. Upload the Authentication Key and fill in the detatils
-7.  In Xcode, enable the following capabilities:
+5.  In Xcode, enable the following capabilities:
     1. Push Notifications
     2. Background modes > Remote notifications
-8.  Add the following code to `AppDelegate.m`
+6.  Add the following code to `AppDelegate.m`
 
     1. To recieve the notifications
 
@@ -205,15 +203,16 @@ The Firebase console provides a `GoogleService-Info.plist` file containing a set
     [[RNFirebaseMessaging instance] didRegisterUserNotificationSettings:notificationSettings];
     }
     ```
+7.  Run `$ npx react-native run-ios` to confirm the app communicates with firebase (You may need to uninstall and reinstall your app.)
 
-**_NB!!!! Notifications will only come through on a real physical device - this is a limitation set by Apple._**
+⚠️ Notifications will only come through on a real physical device - this is a limitation set by Apple.
 
-**_NB!!!! You can only recieve the messages / notifications on iOS if you have permission - ensure you request and have the permission first._**
+⚠️ You can only recieve the messages / notifications on iOS if you have permission - ensure you request and have the permission first.
 
-## Usage
+## ✅ Usage
 
 ```javascript
-import { notifications } from "react-native-firebase-push-notifications"
+import { notifications, NotificationMessage, Android } from 'react-native-firebase-push-notifications'
 
   getToken = async () => {
     //get the messeging token
