@@ -7,6 +7,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "sdkVersions": {
+    "ios": {
+      "firebase": "~> 6.34.0"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/afrihost/react-native-firebase-push-notifications.git",

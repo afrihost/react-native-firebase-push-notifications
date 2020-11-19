@@ -1,6 +1,7 @@
 require "json"
 
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
+firebase_sdk_version = package['sdkVersions']['ios']['firebase'] || '~> 6.31.0'
 
 Pod::Spec.new do |s|
   s.name         = "react-native-firebase-push-notifications"
