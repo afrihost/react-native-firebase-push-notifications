@@ -19,10 +19,23 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,swift}"
   s.requires_arc = true
 
-  s.dependency "React"
-  s.dependency "Firebase/Core", '~> 6.30.0'
-  s.dependency "Firebase/Messaging", '~> 6.30.0'
-  # ...
-  # s.dependency "..."
+  # React Native dependencies
+  s.dependency          'React-Core'
+
+  if defined?($FirebaseSDKVersion)
+    Pod::UI.puts "#{s.name}: Using user specified Firebase SDK version '#{$FirebaseSDKVersion}'"
+    firebase_sdk_version = $FirebaseSDKVersion
+  end
+
+  # Firebase dependencies
+  s.dependency          'Firebase/CoreOnly', firebase_sdk_version
+  s.dependency          'Firebase/Messaging', firebase_sdk_version
+
+  if defined?($RNFirebaseAsStaticFramework)
+    Pod::UI.puts "#{s.name}: Using overridden static_framework value of '#{$RNFirebaseAsStaticFramework}'"
+    s.static_framework = $RNFirebaseAsStaticFramework
+  else
+    s.static_framework = false
+  end
 end
 
