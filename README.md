@@ -35,7 +35,7 @@ The Firebase console provides a `google-services.json` file containing a set of 
 1. Select your firebase android project
 2. select the android icon that will open the configuration section
    1. Fill in the required information
-   2. Dpwnload the `google=services.json` file. Then Switch to the Project view in Android Studio to see your project root directory. Move the google-services.json file that you just downloaded into your Android app module root directory. eg. `/yourAppsName/android/app`
+   2. Download the `google=services.json` file. Then Switch to the Project view in Android Studio to see your project root directory. Move the google-services.json file that you just downloaded into your Android app module root directory. eg. `/yourAppsName/android/app`
 3. Add the google-services plugin inside `yourAppsName/android`
 
    1. ```javascript buildscript {
