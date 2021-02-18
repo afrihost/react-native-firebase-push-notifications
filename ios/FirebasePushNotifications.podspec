@@ -6,11 +6,11 @@ Pod::Spec.new do |s|
   s.version             = package["version"]
   s.description         = package["description"]
   s.summary             = <<-DESC
-                            A well tested feature rich Firebase implementation for React Native, supporting iOS & Android.
+                            Firebase push notications supporting iOS & Android.
                           DESC
   s.homepage            = "https://www.afrihost.com"
   s.license             = package['license']
-  s.authors             = "Invertase Limited"
+  s.authors             = "N/A"
   s.source              = { :git => "https://github.com/afrihost/react-native-firebase-push-notifications.git", :tag => "v#{s.version}" }
   s.social_media_url    = 'http://twitter.com/afrihost'
   s.platform            = :ios, "9.0"
