@@ -41,7 +41,7 @@ RCT_EXPORT_MODULE()
     [FIRMessaging messaging].delegate = self;
 
     // Establish Firebase managed data channel
-    [FIRMessaging messaging].shouldEstablishDirectChannel = YES;
+    // [FIRMessaging messaging].shouldEstablishDirectChannel = YES;
 
     // Set static instance for use from AppDelegate
     theRNFirebaseMessaging = self;
@@ -85,20 +85,6 @@ RCT_EXPORT_MODULE()
 - (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken {
     DLog(@"Received new FCM token: %@", fcmToken);
     [self sendJSEvent:self name:MESSAGING_TOKEN_REFRESHED body:fcmToken];
-}
-
-// Listen for data messages in the foreground
-- (void)applicationReceivedRemoteMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage {
-    NSDictionary *message = [self parseFIRMessagingRemoteMessage:remoteMessage];
-    [self sendJSEvent:self name:MESSAGING_MESSAGE_RECEIVED body:message];
-}
-
-// Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
-// To enable direct data messages, you can set [Messaging messaging].shouldEstablishDirectChannel to YES.
-- (void)messaging:(nonnull FIRMessaging *)messaging
-didReceiveMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage {
-    NSDictionary *message = [self parseFIRMessagingRemoteMessage:remoteMessage];
-    [self sendJSEvent:self name:MESSAGING_MESSAGE_RECEIVED body:message];
 }
 
 // *******************************************************
@@ -209,23 +195,6 @@ RCT_EXPORT_METHOD(hasPermission:(RCTPromiseResolveBlock)resolve rejecter:(RCTPro
 }
 
 
-RCT_EXPORT_METHOD(sendMessage:(NSDictionary *) message
-                      resolve:(RCTPromiseResolveBlock) resolve
-                       reject:(RCTPromiseRejectBlock) reject) {
-    if (!message[@"to"]) {
-        reject(@"messaging/invalid-message", @"The supplied message is missing a 'to' field", nil);
-    }
-    NSString *to = message[@"to"];
-    NSString *messageId = message[@"messageId"];
-    NSNumber *ttl = message[@"ttl"];
-    NSDictionary *data = message[@"data"];
-
-    [[FIRMessaging messaging] sendMessage:data to:to withMessageID:messageId timeToLive:[ttl intValue]];
-
-    // TODO: Listen for send success / errors
-    resolve(nil);
-}
-
 RCT_EXPORT_METHOD(subscribeToTopic:(NSString*) topic
                            resolve:(RCTPromiseResolveBlock) resolve
                             reject:(RCTPromiseRejectBlock) reject) {
@@ -275,27 +244,27 @@ RCT_EXPORT_METHOD(jsInitialised:(RCTPromiseResolveBlock)resolve rejecter:(RCTPro
     }
 }
 
-- (NSDictionary*)parseFIRMessagingRemoteMessage:(FIRMessagingRemoteMessage *)remoteMessage {
-    NSDictionary *appData = remoteMessage.appData;
-
-    NSMutableDictionary *message = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
-    for (id k1 in appData) {
-        if ([k1 isEqualToString:@"collapse_key"]) {
-            message[@"collapseKey"] = appData[@"collapse_key"];
-        } else if ([k1 isEqualToString:@"from"]) {
-            message[@"from"] = appData[k1];
-        } else if ([k1 isEqualToString:@"notification"]) {
-            // Ignore for messages
-        } else {
-            // Assume custom data key
-            data[k1] = appData[k1];
-        }
-    }
-    message[@"data"] = data;
-
-    return message;
-}
+//- (NSDictionary*)parseFIRMessagingRemoteMessage:(FIRMessagingRemoteMessage *)remoteMessage {
+//    NSDictionary *appData = remoteMessage.appData;
+//
+//    NSMutableDictionary *message = [[NSMutableDictionary alloc] init];
+//    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+//    for (id k1 in appData) {
+//        if ([k1 isEqualToString:@"collapse_key"]) {
+//            message[@"collapseKey"] = appData[@"collapse_key"];
+//        } else if ([k1 isEqualToString:@"from"]) {
+//            message[@"from"] = appData[k1];
+//        } else if ([k1 isEqualToString:@"notification"]) {
+//            // Ignore for messages
+//        } else {
+//            // Assume custom data key
+//            data[k1] = appData[k1];
+//        }
+//    }
+//    message[@"data"] = data;
+//
+//    return message;
+//}
 
 - (NSDictionary*)parseUserInfo:(NSDictionary *)userInfo {
     NSMutableDictionary *message = [[NSMutableDictionary alloc] init];
