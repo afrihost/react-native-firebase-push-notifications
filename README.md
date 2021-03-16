@@ -4,6 +4,8 @@ This project is allows you to recieve remote push notifications for iOS and Andr
 
 ❗ This is a work in progress, the remote notifications work and has been done as priority, the rest will follow periodically.
 
+Version 1 now uses the version 7.* of the firebase SDK.
+
 To get started follow the instructions below:
 
 ## 🚧 Getting started
