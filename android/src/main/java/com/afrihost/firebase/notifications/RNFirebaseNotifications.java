@@ -87,6 +87,16 @@ public class RNFirebaseNotifications extends ReactContextBaseJavaModule implemen
   }
 
   @ReactMethod
+  public void addListener(String eventName) {
+    
+  }
+
+  @ReactMethod
+  public void removeListeners(Integer count) {
+    
+  }
+
+  @ReactMethod
   public void getBadge(Promise promise) {
     int badge = sharedPreferences.getInt(BADGE_KEY, 0);
     Log.d(TAG, "Got badge count: " + badge);
