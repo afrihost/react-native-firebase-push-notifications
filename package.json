@@ -42,8 +42,8 @@
     "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "react": "^16.8.3",
-    "react-native": "^0.59.10"
+    "react": "^17.0.2",
+    "react-native": "^0.65.0"
   },
   "bugs": {
     "url": "https://github.com/afrihost/react-native-firebase-push-notifications/issues"
