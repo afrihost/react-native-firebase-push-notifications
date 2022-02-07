@@ -1,13 +1,13 @@
-import { NativeModules, Platform, NativeEventEmitter } from "react-native"
-import Notification from "./notifications/Notification"
-import AndroidNotifications from "./notifications/AndroidNotifications"
-import IOSNotifications from "./notifications/IOSNotifications"
-import EventEmitter from "react-native/Libraries/vendor/emitter/EventEmitter"
 import _ from "lodash"
+import { NativeEventEmitter, NativeModules, Platform } from "react-native"
+import EventEmitter from "react-native/Libraries/vendor/emitter/EventEmitter"
 import AndroidAction from "./notifications/AndroidAction"
 import AndroidChannel from "./notifications/AndroidChannel"
 import AndroidChannelGroup from "./notifications/AndroidChannelGroup"
+import AndroidNotifications from "./notifications/AndroidNotifications"
 import AndroidRemoteInput from "./notifications/AndroidRemoteInput"
+import IOSNotifications from "./notifications/IOSNotifications"
+import Notification from "./notifications/Notification"
 import {
   BadgeIconType,
   Category,
@@ -16,7 +16,7 @@ import {
   Importance,
   Priority,
   SemanticAction,
-  Visibility,
+  Visibility
 } from "./notifications/types"
 
 const { FirebaseNotifications } = NativeModules
@@ -25,7 +25,7 @@ const { RNFirebaseMessaging } = NativeModules
 const NATIVE_EVENTS = [
   "notifications_notification_displayed",
   "notifications_notification_opened",
-  "notifications_notification_received",
+  "notifications_notification_received"
 ]
 
 class Notifications extends NativeEventEmitter {
@@ -36,7 +36,7 @@ class Notifications extends NativeEventEmitter {
     this.localEventEmitter = new EventEmitter()
     this.removeOnNotificationOpened = this.addListener(
       "notifications_notification_opened",
-      (event) => {
+      event => {
         this.localEventEmitter.emit(
           "onNotificationOpened",
           new Notification(event.notification, this)
@@ -46,7 +46,7 @@ class Notifications extends NativeEventEmitter {
 
     this.removeOnNotificationReceived = this.addListener(
       "notifications_notification_received",
-      (event) => {
+      event => {
         this.localEventEmitter.emit(
           "onNotification",
           new Notification(event, this)
@@ -67,11 +67,11 @@ class Notifications extends NativeEventEmitter {
     return this.IOSNotifications
   }
 
-  displayNotification = async (notification) => {
+  displayNotification = async notification => {
     return await FirebaseNotifications.displayNotification(notification.build())
   }
 
-  onNotificationOpened = (nextOrObserver) => {
+  onNotificationOpened = nextOrObserver => {
     let listener
     if (_.isFunction(nextOrObserver)) {
       listener = nextOrObserver
@@ -86,11 +86,11 @@ class Notifications extends NativeEventEmitter {
     this.localEventEmitter.addListener("onNotificationOpened", listener)
 
     return () => {
-      this.localEventEmitter.removeListener("onNotificationOpened", listener)
+      this.localEventEmitter.removeAllListeners("onNotificationOpened")
     }
   }
 
-  onNotification = (nextOrObserver) => {
+  onNotification = nextOrObserver => {
     let listener
     if (_.isFunction(nextOrObserver)) {
       listener = nextOrObserver
@@ -113,12 +113,13 @@ class Notifications extends NativeEventEmitter {
   }
 
   getInitialNotification = async () => {
-    const initialNotification = await FirebaseNotifications.getInitialNotification()
+    const initialNotification =
+      await FirebaseNotifications.getInitialNotification()
     if (_.has(initialNotification, "notification")) {
       return {
         action: initialNotification.action,
         notification: new Notification(initialNotification.notification, this),
-        results: initialNotification.results,
+        results: initialNotification.results
       }
     }
     return null
@@ -128,7 +129,7 @@ class Notifications extends NativeEventEmitter {
     return FirebaseNotifications.getBadge()
   }
 
-  setBadge = async (num) => {
+  setBadge = async num => {
     return await FirebaseNotifications.setBadge(num)
   }
 
@@ -155,13 +156,13 @@ class Messaging extends NativeEventEmitter {
 
     removeMessageTokenRefreshed = this.addListener(
       "messaging_token_refreshed",
-      (event) => {
+      event => {
         this.localEventEmitter.emit("onTokenRefresh", event)
       }
     )
   }
 
-  onTokenRefresh = (nextOrObserver) => {
+  onTokenRefresh = nextOrObserver => {
     let listener
     if (_.isFunction(nextOrObserver)) {
       listener = nextOrObserver
@@ -207,6 +208,6 @@ export const Android = {
   Priority: Priority,
   RemoteInput: AndroidRemoteInput,
   SemanticAction: SemanticAction,
-  Visibility: Visibility,
+  Visibility: Visibility
 }
 //export default FirebaseNotifications
