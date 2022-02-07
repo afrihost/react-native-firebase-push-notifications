@@ -211,16 +211,6 @@ public class FirebasePushNotificationsModule extends ReactContextBaseJavaModule 
     }
 
     @ReactMethod
-    public void addListener(String eventName) {
-      // For RN built in Event Emitter Calls.
-    }
-  
-    @ReactMethod
-    public void removeListeners(Integer count) {
-      // For RN built in Event Emitter Calls.
-    }
-
-    @ReactMethod
     public void cancelAllNotifications(Promise promise) {
         notificationManager.cancelAllNotifications(promise);
     }
