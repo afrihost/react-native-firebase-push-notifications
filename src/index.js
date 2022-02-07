@@ -176,7 +176,7 @@ class Messaging extends NativeEventEmitter {
     this.localEventEmitter.addListener("onTokenRefresh", listener)
 
     return () => {
-      this.localEventEmitter.removeListener("onTokenRefresh", listener)
+      this.localEventEmitter.removeAllListeners("onTokenRefresh")
     }
   }
 
