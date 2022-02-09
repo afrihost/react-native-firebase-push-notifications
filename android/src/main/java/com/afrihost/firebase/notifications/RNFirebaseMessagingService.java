@@ -2,7 +2,7 @@ package com.afrihost.firebase.notifications;
 
 import android.content.Intent;
 import android.content.ComponentName;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.facebook.react.HeadlessJsTaskService;
