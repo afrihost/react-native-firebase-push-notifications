@@ -29,7 +29,6 @@ import com.facebook.react.bridge.WritableMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -605,6 +604,7 @@ public class FirebasePushNotificationsModule extends ReactContextBaseJavaModule 
         }
     }
 
+
     private class RemoteNotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -656,10 +656,6 @@ public class FirebasePushNotificationsModule extends ReactContextBaseJavaModule 
     }
 
     private class RefreshTokenReceiver extends BroadcastReceiver {
-
-
-
-
         @Override
         public void onReceive(Context context, Intent intent) {
             if (getReactApplicationContext().hasActiveCatalystInstance()) {
@@ -667,21 +663,23 @@ public class FirebasePushNotificationsModule extends ReactContextBaseJavaModule 
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String token = null;
-                        String senderId = FirebaseApp.getInstance().getOptions().getGcmSenderId();
+                        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                            @Override
+                            public void onComplete(@NonNull Task<String> task) {
+                                String token = null;
+                                if (!task.isSuccessful()) {
+                                    return;
+                                }
 
-                        try {
-                            token = FirebaseInstanceId
-                                    .getInstance()
-                                    .getToken(senderId, FirebaseMessaging.INSTANCE_ID_SCOPE);
-                        } catch (IOException e) {
-                            Log.d(TAG, "onNewToken error", e);
-                        }
+                                // Get new FCM registration token
+                                token = task.getResult();
 
-                        if (token != null) {
-                            Log.d(TAG, "Sending new messaging token event.");
-                            Utils.sendEvent(getReactApplicationContext(), "messaging_token_refreshed", token);
-                        }
+                                if (token != null) {
+                                    Log.d(TAG, "Sending new messaging token event.");
+                                    Utils.sendEvent(getReactApplicationContext(), "messaging_token_refreshed", token);
+                                }
+                            }
+                        });
                     }
                 });
 
