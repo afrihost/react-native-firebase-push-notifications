@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.RemoteInput;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -94,14 +96,23 @@ public class FirebasePushNotificationsModule extends ReactContextBaseJavaModule 
         return "FirebaseNotifications";
     }
 
+    
+
     @ReactMethod
-    public void getToken(Promise promise) {
+    public void getToken(final Promise promise) {
         try {
-            String senderId = FirebaseApp.getInstance().getOptions().getGcmSenderId();
-            String token = FirebaseInstanceId
-                    .getInstance()
-                    .getToken(senderId, FirebaseMessaging.INSTANCE_ID_SCOPE);
-            promise.resolve(token);
+            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                @Override
+                public void onComplete(@NonNull Task<String> task) {
+                    if (!task.isSuccessful()) {
+                        return;
+                    }
+
+                    // Get new FCM registration token
+                    String token = task.getResult();
+                    promise.resolve(token);
+                }
+            });
         } catch (Throwable e) {
             e.printStackTrace();
             promise.reject("messaging/fcm-token-error", e.getMessage());
@@ -112,7 +123,7 @@ public class FirebasePushNotificationsModule extends ReactContextBaseJavaModule 
     public void deleteToken(Promise promise) {
         try {
             String senderId = FirebaseApp.getInstance().getOptions().getGcmSenderId();
-            FirebaseInstanceId.getInstance().deleteToken(senderId, FirebaseMessaging.INSTANCE_ID_SCOPE);
+            FirebaseMessaging.getInstance().deleteToken();
             promise.resolve(null);
         } catch (Throwable e) {
             e.printStackTrace();
@@ -645,6 +656,10 @@ public class FirebasePushNotificationsModule extends ReactContextBaseJavaModule 
     }
 
     private class RefreshTokenReceiver extends BroadcastReceiver {
+
+
+
+
         @Override
         public void onReceive(Context context, Intent intent) {
             if (getReactApplicationContext().hasActiveCatalystInstance()) {
