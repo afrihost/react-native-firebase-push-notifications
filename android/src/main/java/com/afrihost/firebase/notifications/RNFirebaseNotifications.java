@@ -66,16 +66,6 @@ public class RNFirebaseNotifications extends ReactContextBaseJavaModule implemen
     );
   }
 
-  // @ReactMethod
-  // public void addListener(String eventName) {
-  //   // For RN built in Event Emitter Calls.
-  // }
-
-  // @ReactMethod
-  // public void removeListeners(Integer count) {
-  //   // For RN built in Event Emitter Calls.
-  // }
-
   @Override
   public String getName() {
     return "RNFirebaseNotifications";
