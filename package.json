@@ -36,7 +36,7 @@
   "licenseFilename": "LICENSE",
   "peerDependencies": {
     "react": "^17.0.2",
-    "react-native": ">=0.65.0 <2.0.x"
+    "react-native": ">=0.65.0"
   },
   "dependencies": {
     "lodash": "^4.17.11"
