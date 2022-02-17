@@ -32,7 +32,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -220,16 +219,15 @@ public class FirebasePushNotificationsModule extends ReactContextBaseJavaModule 
                 });
     }
 
-    @ReactMethod
-    public void addListener(String eventName) {
-        // For RN built in Event Emitter Calls.
-    }
+    //     @ReactMethod
+    // public void addListener(String eventName) {
+    //     // For RN built in Event Emitter Calls.
+    // }
 
-    @ReactMethod
-    public void removeListeners(Integer count) {
-        // For RN built in Event Emitter Calls.
-    }
-
+    // @ReactMethod
+    // public void removeListeners(Integer count) {
+    //     // For RN built in Event Emitter Calls.
+    // }
     @ReactMethod
     public void cancelAllNotifications(Promise promise) {
         notificationManager.cancelAllNotifications(promise);
