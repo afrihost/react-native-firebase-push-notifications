@@ -12,7 +12,7 @@
 
 def DEFAULT_COMPILE_SDK_VERSION = 28
 def DEFAULT_BUILD_TOOLS_VERSION = '28.0.3'
-def DEFAULT_MIN_SDK_VERSION = 16
+def DEFAULT_MIN_SDK_VERSION = 19
 def DEFAULT_TARGET_SDK_VERSION = 28
 
 def safeExtGet(prop, fallback) {
@@ -34,7 +34,7 @@ buildscript {
         }
         dependencies {
             classpath 'com.android.tools.build:gradle:3.5.3'
-            classpath 'com.google.gms:google-services:4.3.3'
+            classpath 'com.google.gms:google-services:4.3.10'
         }
     }
 }
@@ -114,9 +114,9 @@ repositories {
     })
 
     if (!found) {
-        throw new GradleException(
-                "${project.name}: unable to locate React Native android sources or prebuilt binary. " +
-                        "Ensure you have you installed React Native as a dependency in your project and try again."
+         throw new FileNotFoundException(
+                 "${project.name}: unable to locate React Native android sources or prebuilt binary. " +
+                         "Ensure you have you installed React Native as a dependency in your project and try again."
         )
     }
 }
@@ -125,10 +125,15 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
     // Add the Firebase SDK for Google Analytics
-    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+    implementation platform('com.google.firebase:firebase-bom:29.1.0')
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'android.arch.work:work-runtime:1.0.1'
     implementation "me.leolin:ShortcutBadger:1.1.22@aar"
+
+    // Declare the dependency for the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics'
+
+
     // Add the SDKs for any other Firebase products you want to use in your app
     // For example, to use Firebase Authentication and Cloud Firestore
 //    implementation 'com.google.firebase:firebase-auth:19.2.0'
