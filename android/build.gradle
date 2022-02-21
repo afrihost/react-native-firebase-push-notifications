@@ -114,10 +114,10 @@ repositories {
     })
 
     if (!found) {
-        // throw new FileNotFoundException(
-        //         "${project.name}: unable to locate React Native android sources or prebuilt binary. " +
-        //                 "Ensure you have you installed React Native as a dependency in your project and try again."
-        // )
+         throw new FileNotFoundException(
+                 "${project.name}: unable to locate React Native android sources or prebuilt binary. " +
+                         "Ensure you have you installed React Native as a dependency in your project and try again."
+        )
     }
 }
 
