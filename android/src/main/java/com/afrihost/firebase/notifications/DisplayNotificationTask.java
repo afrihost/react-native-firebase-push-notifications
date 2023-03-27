@@ -475,9 +475,15 @@ public class DisplayNotificationTask extends AsyncTask<Void, Void, Void> {
       context,
       notificationId.hashCode(),
       intent,
-      PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE :
+                PendingIntent.FLAG_UPDATE_CURRENT
     );
   }
+
+  Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE :
+                PendingIntent.FLAG_UPDATE_CURRENT
 
   private PendingIntent createBroadcastIntent(Context context, Bundle notification, String action) {
     String notificationId = notification.getString("notificationId") + action;
@@ -492,7 +498,9 @@ public class DisplayNotificationTask extends AsyncTask<Void, Void, Void> {
       context,
       notificationId.hashCode(),
       intent,
-      PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE :
+                PendingIntent.FLAG_UPDATE_CURRENT
     );
   }
 
