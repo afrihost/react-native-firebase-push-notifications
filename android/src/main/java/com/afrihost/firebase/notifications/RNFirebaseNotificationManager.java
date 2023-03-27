@@ -301,7 +301,9 @@ class RNFirebaseNotificationManager {
       context,
       notificationId.hashCode(),
       notificationIntent,
-      PendingIntent.FLAG_UPDATE_CURRENT
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE :
+                PendingIntent.FLAG_UPDATE_CURRENT
     );
     alarmManager.cancel(pendingIntent);
   }
@@ -577,7 +579,9 @@ class RNFirebaseNotificationManager {
       context,
       notificationId.hashCode(),
       notificationIntent,
-      PendingIntent.FLAG_UPDATE_CURRENT
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE :
+                PendingIntent.FLAG_UPDATE_CURRENT
     );
 
     if (schedule.containsKey("repeatInterval")) {

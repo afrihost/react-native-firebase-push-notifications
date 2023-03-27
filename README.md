@@ -1,6 +1,6 @@
 # react-native-firebase-push-notifications
 
-This project is allows you to recieve remote push notifications for iOS and Android. There is support for local notifications and messaging channel's which will be updated periodically.
+This project is allows you to recieve remote push notifications for iOS and Android. There is support for local notifications and messaging channel's which will be updated periodically .
 
 ❗ This is a work in progress, the remote notifications work and has been done as priority, the rest will follow periodically.
 
