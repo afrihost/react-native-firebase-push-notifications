@@ -127,7 +127,6 @@ dependencies {
     // Add the Firebase SDK for Google Analytics
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
     implementation 'com.google.firebase:firebase-messaging'
-    implementation 'android.arch.work:work-runtime:1.0.1'
     implementation "me.leolin:ShortcutBadger:1.1.22@aar"
 
     // Declare the dependency for the Firebase SDK for Google Analytics
