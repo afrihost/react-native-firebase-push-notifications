@@ -35,8 +35,8 @@
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-native": ">=0.65.0"
+    "react": "*",
+    "react-native": "*"
   },
   "dependencies": {
     "lodash": "^4.17.11"
