@@ -45,6 +45,7 @@ apply plugin: 'maven-publish'
 android {
     compileSdkVersion 33
     buildToolsVersion "30.0.3"
+    namespace "com.afrihost.firebase.notifications"
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 33
@@ -182,12 +183,12 @@ afterEvaluate { project ->
     }
 
     task androidJavadocJar(type: Jar, dependsOn: androidJavadoc) {
-        classifier = 'javadoc'
+        archiveClassifier = 'javadoc'
         from androidJavadoc.destinationDir
     }
 
     task androidSourcesJar(type: Jar) {
-        classifier = 'sources'
+        archiveClassifier = 'javadoc'
         from android.sourceSets.main.java.srcDirs
         include '**/*.java'
     }
